@@ -36,7 +36,7 @@ export default class TodoListItem extends Component {
 
 
     render() {
-        const {label} = this.props;
+        const {label, onDeleted} = this.props;
 
         const {done, important} = this.state;
 
@@ -58,7 +58,9 @@ export default class TodoListItem extends Component {
                 <span>
                 <button className="btn-floating waves-effect waves-light" onClick={this.onMarkImportant}><i
                     className="material-icons">flag</i></button>
-                <button className="btn-floating waves-effect waves-light red"><i
+                <button className="btn-floating waves-effect waves-light red"
+                    onClick={onDeleted}
+                ><i
                     className="material-icons">delete_forever</i></button>
                 </span>
             </li>
