@@ -1,12 +1,22 @@
-.TodoListItem{
+.TodoListItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 25px;
     cursor: pointer;
+    color: #000000;
 }
 
-.TodoListItem button{
+.TodoListItem button {
     margin: 0 7px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.important {
+    color: #dd2c00;
+    font-weight: 500;
 }
 
