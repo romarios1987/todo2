@@ -1,3 +1,9 @@
 .SearchPanel{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
+.filter{
+    text-align: right;
 }

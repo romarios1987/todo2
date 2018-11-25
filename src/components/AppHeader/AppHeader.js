@@ -3,7 +3,7 @@ import './AppHeader.css';
 
 const AppHeader = () => {
     return (
-        <h1>My Todo list</h1>
+        <h3>My Todo list</h3>
     )
 };
 export default AppHeader;
