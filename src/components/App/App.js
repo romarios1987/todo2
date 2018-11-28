@@ -3,8 +3,11 @@ import './App.css';
 import AppHeader from "../AppHeader/AppHeader";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import TodoList from "../TodoList/TodoList";
+import ItemAddForm from "../ItemAddForm/ItemAddForm";
 
 export default class App extends Component {
+
+    maxId = 100;
 
     state = {
         todoData: [
@@ -14,6 +17,57 @@ export default class App extends Component {
         ]
     };
 
+    // addItem = (text) => {
+    //
+    //     // create ne item
+    //     const newItem = {
+    //         label: text,
+    //         important: false,
+    //         id: this.maxId++
+    //     };
+    //
+    //     // add element in array
+    //     this.setState(({todoData}) => {
+    //
+    //         // Плохой способ
+    //         //todoData.push(newItem);
+    //
+    //         const newArray = [...todoData, newItem];
+    //
+    //
+    //         return {
+    //             todoData: newArray
+    //         }
+    //
+    //     })
+    // };
+
+    // Add Item
+    addItem = (text) => {
+            const newItem = {
+                label: text,
+                important: false,
+                id: this.maxId++
+            };
+
+
+        // Add element to array
+        this.setState(({todoData}) => {
+
+            // new Array
+            const newArray = [
+                ...todoData, newItem
+            ];
+            return {
+                todoData: newArray
+            }
+
+        })
+
+    };
+
+
+    // Delete Item
     deleteItem = (id) => {
 
         this.setState(({todoData}) => {
@@ -50,6 +104,9 @@ export default class App extends Component {
                         <TodoList
                             todos={todoData}
                             onDeleted={this.deleteItem}
+                        />
+                        <ItemAddForm
+                            onItemAdded={this.addItem}
                         />
                     </div>
                 </div>
