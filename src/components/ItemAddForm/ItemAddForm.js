@@ -3,15 +3,29 @@ import './ItemAddForm.css';
 
 export default class ItemAddForm extends Component {
 
+    state = {
+        label: ''
+    };
+
+
+    onLabelChange = (e) => {
+        this.setState({
+            label: e.target.value
+        })
+    };
+
+    onSubmit = (e) =>{
+        e.preventDefault();
+        this.props.onItemAdded(this.state.label)
+    };
+
 
     render() {
-
-        const {onItemAdded} = this.props;
-        console.log(onItemAdded(23434));
         return (
             <div className='ItemAddForm row'>
-                <form className='valign-wrapper'>
-                    <input type="text" className='input-field col s6'/>
+                <form className='valign-wrapper' onSubmit={this.onSubmit}>
+                    <input type="text" className='input-field col s6' onChange={this.onLabelChange}
+                           placeholder="What needs to be done"/>
 
                     <div className="col s6 right-align">
                         <button className="btn waves-effect waves-light">Add Item

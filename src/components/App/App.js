@@ -4,6 +4,8 @@ import AppHeader from "../AppHeader/AppHeader";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import TodoList from "../TodoList/TodoList";
 import ItemAddForm from "../ItemAddForm/ItemAddForm";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class App extends Component {
 
@@ -17,52 +19,54 @@ export default class App extends Component {
         ]
     };
 
-    // addItem = (text) => {
-    //
-    //     // create ne item
-    //     const newItem = {
-    //         label: text,
-    //         important: false,
-    //         id: this.maxId++
-    //     };
-    //
-    //     // add element in array
-    //     this.setState(({todoData}) => {
-    //
-    //         // Плохой способ
-    //         //todoData.push(newItem);
-    //
-    //         const newArray = [...todoData, newItem];
-    //
-    //
-    //         return {
-    //             todoData: newArray
-    //         }
-    //
-    //     })
-    // };
+    notify = () => toast.error('Enter task !', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+    });
 
-    // Add Item
+
+    onToggleImportant = (id) => {
+        console.log('onToggleImportant', id)
+    };
+
+    onToggleDone = (id) => {
+        console.log('onToggleDone', id)
+    };
+
     addItem = (text) => {
+
+        if (text !== '') {
+            // create new item
             const newItem = {
                 label: text,
                 important: false,
                 id: this.maxId++
             };
 
+            // add element in array
+            this.setState(({todoData}) => {
 
-        // Add element to array
-        this.setState(({todoData}) => {
+                // Плохой способ
+                //todoData.push(newItem);
 
-            // new Array
-            const newArray = [
-                ...todoData, newItem
-            ];
-            return {
-                todoData: newArray
-            }
+                const newArray = [...todoData, newItem];
+                return {
+                    todoData: newArray
+                }
+            })
 
-        })
+        } else {
+            //alert('Enter text')
+            //M.toast({html: 'I am a toast!'})
+
+            this.notify();
+
+        }
+
 
     };
 
@@ -104,9 +108,22 @@ export default class App extends Component {
                         <TodoList
                             todos={todoData}
                             onDeleted={this.deleteItem}
+                            onToggleImportant={this.onToggleImportant}
+                            onToggleDone={this.onToggleDone}
                         />
                         <ItemAddForm
                             onItemAdded={this.addItem}
+                        />
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnVisibilityChange
+                            draggable
+                            pauseOnHover
                         />
                     </div>
                 </div>

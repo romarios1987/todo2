@@ -6,16 +6,16 @@ import './TodoListItem.css';
 export default class TodoListItem extends Component {
 
 
-    state = {
-        done: false,
-        important: false
-    };
+    // state = {
+    //     done: false,
+    //     important: false
+    // };
 
-    onLabelClick = () => {
-        this.setState(({done}) => {
-            return {done: !done}
-        })
-    };
+    // onLabelClick = () => {
+    //     this.setState(({done}) => {
+    //         return {done: !done}
+    //     })
+    // };
 
     // onMarkImportant = () => {
     //     this.setState({
@@ -25,20 +25,20 @@ export default class TodoListItem extends Component {
     //     })
     // };
 
-    onMarkImportant = () => {
-        this.setState((state) => {
-            return {
-                important: !state.important
-            }
-        })
-    };
+    // onMarkImportant = () => {
+    //     this.setState((state) => {
+    //         return {
+    //             important: !state.important
+    //         }
+    //     })
+    // };
 
 
 
     render() {
-        const {label, onDeleted} = this.props;
+        const {label, onDeleted, onToggleImportant, onToggleDone, done, important} = this.props;
 
-        const {done, important} = this.state;
+        //const {done, important} = this.state;
 
         let cls = 'TodoListItem collection-item';
 
@@ -53,10 +53,10 @@ export default class TodoListItem extends Component {
         return (
             <li className={cls}>
 
-                <span onClick={this.onLabelClick}>{label}</span>
+                <span onClick={onToggleDone}>{label}</span>
 
                 <span>
-                <button className="btn-floating waves-effect waves-light" onClick={this.onMarkImportant}><i
+                <button className="btn-floating waves-effect waves-light" onClick={onToggleImportant}><i
                     className="material-icons">flag</i></button>
                 <button className="btn-floating waves-effect waves-light red"
                     onClick={onDeleted}
