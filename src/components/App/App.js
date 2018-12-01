@@ -17,7 +17,8 @@ export default class App extends Component {
             this.createTodoItem('React 2 Learn'),
             this.createTodoItem('React 3 Learn')
         ],
-        term: ''
+        term: '',
+        filter: 'all'// all, active, done
     };
 
 
@@ -50,7 +51,7 @@ export default class App extends Component {
     }
 
 
-    notify = () => toast.error('Enter task !', {
+    notify = () => toast.error('Please Enter task !', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -117,6 +118,7 @@ export default class App extends Component {
     };
 
 
+    // Search
     searchItems(items, term) {
 
         if (term.length === 0) {
@@ -133,10 +135,30 @@ export default class App extends Component {
     };
 
 
-    render() {
-        const {todoData, term} = this.state;
+    // Filter
+    filterItems(items, filter) {
+        switch (filter) {
+            case 'all':
+                return items;
+            case 'done':
+                return items.filter((item) => item.done);
+            case 'active':
+                return items.filter((item) => !item.done);
+            default:
+                return items;
+        }
+    }
 
-        const visibleItems = this.searchItems(todoData, term);
+
+    onFilterChange = (filter) =>{
+        this.setState({filter})
+    };
+
+
+    render() {
+        const {todoData, term, filter} = this.state;
+
+        const visibleItems = this.filterItems(this.searchItems(todoData, term), filter);
 
         // count items done
         const doneCount = todoData.filter((el) => el.done).length;
@@ -153,6 +175,8 @@ export default class App extends Component {
                             toDo={toDoCount}
                             done={doneCount}
                             onSearchChange={this.onSearchChange}
+                            filter={filter}
+                            onFilterChange={this.onFilterChange}
                         />
                         <TodoList
                             todos={visibleItems}

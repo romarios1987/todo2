@@ -5,7 +5,7 @@ import ItemStatusFilter from "../ItemStatusFilter/ItemStatusFilter";
 export default class SearchPanel extends Component {
 
     state = {
-        term: ''
+        term: '',
     };
 
     onSearchChange = (e) => {
@@ -16,6 +16,7 @@ export default class SearchPanel extends Component {
 
     render() {
         const searchText = 'Type here to search';
+        const {filter} = this.props;
         return (
             <div className='row'>
                 <div className="SearchPanel">
@@ -23,7 +24,10 @@ export default class SearchPanel extends Component {
                         <input type="text" placeholder={searchText} value={this.state.term}
                                onChange={this.onSearchChange}/>
                     </div>
-                    <ItemStatusFilter/>
+                    <ItemStatusFilter
+                        filter={filter}
+                        onFilterChange={this.props.onFilterChange}
+                    />
                 </div>
                 <div className="col s12">
                     <span style={{fontWeight: 'bold'}}
