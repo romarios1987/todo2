@@ -14,9 +14,12 @@ export default class ItemAddForm extends Component {
         })
     };
 
-    onSubmit = (e) =>{
+    onSubmit = (e) => {
         e.preventDefault();
-        this.props.onItemAdded(this.state.label)
+        this.props.onItemAdded(this.state.label);
+        this.setState({
+            label: ''
+        })
     };
 
 
@@ -25,7 +28,7 @@ export default class ItemAddForm extends Component {
             <div className='ItemAddForm row'>
                 <form className='valign-wrapper' onSubmit={this.onSubmit}>
                     <input type="text" className='input-field col s6' onChange={this.onLabelChange}
-                           placeholder="What needs to be done"/>
+                           placeholder="What needs to be done" value={this.state.label}/>
 
                     <div className="col s6 right-align">
                         <button className="btn waves-effect waves-light">Add Item

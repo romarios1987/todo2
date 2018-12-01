@@ -16,7 +16,8 @@ export default class App extends Component {
             this.createTodoItem('React Learn'),
             this.createTodoItem('React 2 Learn'),
             this.createTodoItem('React 3 Learn')
-        ]
+        ],
+        term: ''
     };
 
 
@@ -115,8 +116,27 @@ export default class App extends Component {
         })
     };
 
+
+    searchItems(items, term) {
+
+        if (term.length === 0) {
+            return items
+        }
+
+        return items.filter((item) => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1
+        })
+    }
+
+    onSearchChange = (term) => {
+        this.setState({term})
+    };
+
+
     render() {
-        const {todoData} = this.state;
+        const {todoData, term} = this.state;
+
+        const visibleItems = this.searchItems(todoData, term);
 
         // count items done
         const doneCount = todoData.filter((el) => el.done).length;
@@ -129,9 +149,13 @@ export default class App extends Component {
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <AppHeader/>
-                        <SearchPanel toDo={toDoCount} done={doneCount}/>
+                        <SearchPanel
+                            toDo={toDoCount}
+                            done={doneCount}
+                            onSearchChange={this.onSearchChange}
+                        />
                         <TodoList
-                            todos={todoData}
+                            todos={visibleItems}
                             onDeleted={this.deleteItem}
                             onToggleImportant={this.onToggleImportant}
                             onToggleDone={this.onToggleDone}
