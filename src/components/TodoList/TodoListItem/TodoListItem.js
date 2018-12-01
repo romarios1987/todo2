@@ -1,69 +1,32 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './TodoListItem.css';
 
-//label = props.label
-//important = props.important
-export default class TodoListItem extends Component {
+const TodoListItem = (props) => {
 
+    const {label, onDeleted, onToggleImportant, onToggleDone, done, important} = props;
 
-    // state = {
-    //     done: false,
-    //     important: false
-    // };
+    let cls = 'TodoListItem collection-item';
 
-    // onLabelClick = () => {
-    //     this.setState(({done}) => {
-    //         return {done: !done}
-    //     })
-    // };
+    if (done) {
+        cls += ' done';
+    }
+    if (important) {
+        cls += ' important';
+    }
 
-    // onMarkImportant = () => {
-    //     this.setState({
-    //         // неверный подход
-    //         // important: !this.state.important
-    //         important: true
-    //     })
-    // };
-
-    // onMarkImportant = () => {
-    //     this.setState((state) => {
-    //         return {
-    //             important: !state.important
-    //         }
-    //     })
-    // };
-
-
-
-    render() {
-        const {label, onDeleted, onToggleImportant, onToggleDone, done, important} = this.props;
-
-        //const {done, important} = this.state;
-
-        let cls = 'TodoListItem collection-item';
-
-        if (done) {
-            cls += ' done';
-        }
-        if (important) {
-            cls += ' important';
-        }
-
-
-        return (
-            <li className={cls}>
-
-                <span onClick={onToggleDone}>{label}</span>
-
-                <span>
+    return (
+        <li className={cls}>
+            <span onClick={onToggleDone}>{label}</span>
+            <span>
                 <button className="btn-floating waves-effect waves-light" onClick={onToggleImportant}><i
                     className="material-icons">flag</i></button>
                 <button className="btn-floating waves-effect waves-light red"
-                    onClick={onDeleted}
-                ><i
-                    className="material-icons">delete_forever</i></button>
+                        onClick={onDeleted}>
+                    <i className="material-icons">delete_forever</i>
+                </button>
                 </span>
-            </li>
-        )
-    }
-}
+        </li>
+    )
+
+};
+export default TodoListItem;

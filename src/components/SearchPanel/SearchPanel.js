@@ -2,7 +2,7 @@ import React from 'react';
 import './SearchPanel.css';
 import ItemStatusFilter from "../ItemStatusFilter/ItemStatusFilter";
 
-const SearchPanel = () => {
+const SearchPanel = (props) => {
     const searchText = 'Type here to search';
     return (
         <div className='row'>
@@ -15,7 +15,7 @@ const SearchPanel = () => {
 
             </div>
             <div className="col s12">
-                <span style={{fontWeight: 'bold'}} className='right-align'>3 more to do, 0 done</span>
+                <span style={{fontWeight: 'bold'}} className='right-align'>{props.toDo} more to do, {props.done} done</span>
             </div>
         </div>
 

@@ -13,11 +13,41 @@ export default class App extends Component {
 
     state = {
         todoData: [
-            {label: 'React Learn', important: false, id: 1},
-            {label: 'React Learn2', important: false, id: 2},
-            {label: 'React Learn3', important: true, id: 3}
+            this.createTodoItem('React Learn'),
+            this.createTodoItem('React 2 Learn'),
+            this.createTodoItem('React 3 Learn')
         ]
     };
+
+
+    createTodoItem(label) {
+        return {
+            label: label,
+            important: false,
+            done: false,
+            id: this.maxId++
+        };
+    };
+
+
+    toggleProperty(arr, id, propName) {
+        const idx = arr.findIndex((el) => el.id === id);
+
+        // Update Object
+        const oldItem = arr[idx];
+        const newItem = {
+            ...oldItem,
+            [propName]: !oldItem[propName]
+        };
+
+        // construct new array
+        return [
+            ...arr.slice(0, idx),
+            newItem,
+            ...arr.slice(idx + 1)
+        ];
+    }
+
 
     notify = () => toast.error('Enter task !', {
         position: "top-right",
@@ -30,44 +60,33 @@ export default class App extends Component {
 
 
     onToggleImportant = (id) => {
-        console.log('onToggleImportant', id)
+        this.setState(({todoData}) => {
+            return {
+                todoData: this.toggleProperty(todoData, id, 'important')
+            };
+        })
     };
 
     onToggleDone = (id) => {
-        console.log('onToggleDone', id)
+        this.setState(({todoData}) => {
+            return {
+                todoData: this.toggleProperty(todoData, id, 'done')
+            };
+        })
     };
 
     addItem = (text) => {
-
         if (text !== '') {
-            // create new item
-            const newItem = {
-                label: text,
-                important: false,
-                id: this.maxId++
-            };
-
-            // add element in array
+            const newItem = this.createTodoItem(text);
             this.setState(({todoData}) => {
-
-                // Плохой способ
-                //todoData.push(newItem);
-
                 const newArray = [...todoData, newItem];
                 return {
                     todoData: newArray
                 }
             })
-
         } else {
-            //alert('Enter text')
-            //M.toast({html: 'I am a toast!'})
-
             this.notify();
-
         }
-
-
     };
 
 
@@ -99,12 +118,18 @@ export default class App extends Component {
     render() {
         const {todoData} = this.state;
 
+        // count items done
+        const doneCount = todoData.filter((el) => el.done).length;
+
+        // count all items
+        const toDoCount = todoData.length - doneCount;
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <AppHeader/>
-                        <SearchPanel/>
+                        <SearchPanel toDo={toDoCount} done={doneCount}/>
                         <TodoList
                             todos={todoData}
                             onDeleted={this.deleteItem}
